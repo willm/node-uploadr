@@ -6,11 +6,17 @@
 	
 	server.configure(function configureAppAndMiddleware() {
 		server.set('view engine', 'jade');
-		server.set('view', path.join(__dirname,'views'));
+		server.use(express.bodyParser());
 	});
 	
 	server.get('/', function  (req, res){
 		res.render("index", {layout : false});
+	});
+	
+	server.post('/upload', function (req, res){
+		
+		console.log(req.body);
+		res.send(200);
 	});
 	
 	server.listen(8080);
