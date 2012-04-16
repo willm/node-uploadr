@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"description": "",
 	"homepage": [
-		"",
+		""
 	],
 	"repository": {
 		"type": "git",
@@ -20,6 +20,6 @@
 	"main": "server.js",
 	"dependencies": {
 		"express": "2.5.1",
-		"jade": "0.14.2",
+		"jade": "0.14.2"
 	}
 }
