@@ -23,7 +23,7 @@ server = http.createServer(function(req, res) {
     form.uploadDir = TEST_TMP;
 	
 	function percentageComplete (total, received){
-		return received * 100 / total;
+		return Math.round(received * 100 / total);
 	}
 
     form
