@@ -1,31 +1,3 @@
-/*(function  (){
-	var express = require('express'),
-		formidable = require('formidable');
-	
-	server = express.createServer();
-	
-	server.configure(function() {
-		server.set('view engine', 'jade');
-		server.use(express.bodyParser({uploadDir:'./uploads'}));
-		var form = new formidable.IncomingForm();
-		form.onPart = function(part) {
-		  part.addListener('data', function() {
-			console.log('boo');
-		  });
-		}
-	});
-	
-	server.get('/', function  (req, res){
-		res.render("index", {layout : false});
-	});
-	
-	server.post('/upload', function (req, res){
-		console.log("req");
-	});
-	
-	server.listen(8080);
-	console.log("server listening on port 8080");
-})()*/
 TEST_PORT = 8080;
 TEST_TMP = './uploads'
 var http = require('http'),
@@ -49,16 +21,9 @@ server = http.createServer(function(req, res) {
         fields = [];
 
     form.uploadDir = TEST_TMP;
-
-	form.onPart = function(part) {
-	  part.addListener('data', function() {
-		console.log(percentageComplete(form.bytesExpected,form.bytesReceived));
-		form.handlePart(part);
-	  });
-	}
 	
 	function percentageComplete (total, received){
-		return percent = received * 100 / total;
+		return received * 100 / total;
 	}
 
     form
@@ -66,8 +31,10 @@ server = http.createServer(function(req, res) {
         console.log(field, value);
         fields.push([field, value]);
       })
+      .on('progress', function(bytesReceived, bytesExpected) {
+        console.log(percentageComplete(bytesExpected,bytesReceived))
+      })
       .on('file', function(field, file) {
-        console.log(field, file.size);
         files.push([field, file]);
       })
       .on('end', function() {
