@@ -36,10 +36,10 @@ server.listen(TEST_PORT);
 console.log('listening on http://localhost:'+TEST_PORT+'/');
 
 io.sockets.on('connection', function (socket) {
-	setInterval(function(){
+	/*setInterval(function(){
 		socket.emit('news', { hello: 'world' });
-		}, 2000);
-	socket.on('my other event', function (data) {
+		}, 2000);*/
+	socket.on('begin-upload', function (data) {
 		console.log(data);
 	});
 });
