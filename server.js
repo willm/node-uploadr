@@ -1,5 +1,3 @@
-
-
 TEST_PORT = 8080;
 TEST_TMP = './uploads';
 
@@ -8,15 +6,27 @@ var http = require('http'),
     fs = require('fs'),
     jade = require('jade'),
     formidable = require('formidable'),
+    Page = require('./Page.js'),
     server;
 
 server = http.createServer(function(req, res) {
   switch(req.url){
   	case '/':
-		new Page().render('index.jade', res);
+  		//console.log(Page);
+		Page.render('index.jade', res);
 	break;
+	
 	case '/upload':
-		var form = new formidable.IncomingForm(),
+		uploader(req, res);
+	break;
+	
+	default:
+    	Page.notFound(res);
+  }
+});
+
+function uploader(req, res){
+	var form = new formidable.IncomingForm(),
 		    files = [],
 		    fields = [];
 
@@ -45,20 +55,10 @@ server = http.createServer(function(req, res) {
 		    res.end('received files:\n\n '+util.inspect(files));
 		  });
 		form.parse(req);
-	break;
-	default:
-    res.writeHead(404, {'content-type': 'text/plain'});
-    res.end('404');
-  }
-});
-
-function Page (){};
-Page.prototype.render = function (file, response){
-	response.writeHead(200, {'content-type': 'text/html'});
-		fs.readFile('./views/'+file,'utf8',function (err, data){
-			response.end(jade.compile(data)());
-		});
 }
+
+
+
 server.listen(TEST_PORT);
 
 console.log('listening on http://localhost:'+TEST_PORT+'/');
