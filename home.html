@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>uploadr</title>
+   </head>
+   <body>
+      <h1>uploadr</h1>
+      <form action="/upload" method="post" enctype="multipart/form-data" style="width:300px"><br />
+      <label for="file">file: </label>
+      <input type="file" name="file" id="file" /><br />
+      <label for="message">message: </label>
+      <textarea name="message" id="message" style="vertical-align:text-top;"></textarea><br />
+      <input type="submit" />
+      </form>
+      <button onclick=clicked>Foo</button>
+      <script src="/socket.io/socket.io.js"></script>
+      <script>
+		  var socket = io.connect('http://localhost');
+		  socket.on('news', function (data) {
+			console.log(data);
+			socket.emit('my other event', { my: 'data' });
+		  });
+		  var clicked = function(){
+		  	socket.emit('my other event', { my: 'data' });
+		  }
+      </script>
+   </body>
+</html>
