@@ -12,13 +12,12 @@
       <textarea name="message" id="message" style="vertical-align:text-top;"></textarea><br />
       <input type="submit" />
       </form>
-      <button onclick=clicked>Foo</button>
+      <button onclick=clicked()>Foo</button>
       <script src="/socket.io/socket.io.js"></script>
       <script>
 		  var socket = io.connect('http://localhost');
 		  socket.on('news', function (data) {
 			console.log(data);
-			socket.emit('my other event', { my: 'data' });
 		  });
 		  var clicked = function(){
 		  	socket.emit('my other event', { my: 'data' });
