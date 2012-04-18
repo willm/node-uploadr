@@ -1,21 +1,22 @@
 TEST_PORT = 8080;
-TEST_TMP = './uploads'
+TEST_TMP = './uploads';
+
 var http = require('http'),
     util = require('util'),
+    fs = require('fs'),
+    jade = require('jade'),
     formidable = require('formidable'),
     server;
 
 server = http.createServer(function(req, res) {
   if (req.url == '/') {
     res.writeHead(200, {'content-type': 'text/html'});
-    res.end(
-      '<form action="/upload" enctype="multipart/form-data" method="post">'+
-      '<input type="text" name="title"><br>'+
-      '<input type="file" name="upload" multiple="multiple"><br>'+
-      '<input type="submit" value="Upload">'+
-      '</form>'
-    );
-  } else if (req.url == '/upload') {
+    fs.readFile('./views/index.jade','utf8',function (err, data){
+		res.end(jade.compile(data)());
+	});
+  }
+  
+  else if (req.url == '/upload') {
     var form = new formidable.IncomingForm(),
         files = [],
         fields = [];
