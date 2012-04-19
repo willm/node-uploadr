@@ -3,9 +3,16 @@ var fs = require('fs'),
 
 	exports.render = function (file, response){
 		response.writeHead(200, {'content-type': 'text/html'});
-			fs.readFile('./views/'+file,'utf8',function (err, data){
-				response.end(jade.compile(data)());
-			});
+			fs.readFile(__dirname + '/' + file,
+			  function (err, data) {
+				if (err) {
+				  res.writeHead(500);
+				  return res.end('Error loading index.html');
+				}
+
+				res.writeHead(200);
+				res.end(data);
+		});
 	}
 
 	exports.notFound = function (res){

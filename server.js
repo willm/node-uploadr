@@ -4,7 +4,6 @@ var server = require('http').createServer(routes),
     uploader = require('./Uploader.js'),
     Page = require('./Page.js'),
     io = require('socket.io').listen(server),
-    fs = require('fs'),
     events = require('events');
     
 var uploadHandler = new events.EventEmitter();
@@ -12,19 +11,9 @@ var uploadHandler = new events.EventEmitter();
 function routes(req, res) {
   switch(req.url){
   	case '/':
-	  	fs.readFile(__dirname + '/home.html',
-		  function (err, data) {
-			if (err) {
-			  res.writeHead(500);
-			  return res.end('Error loading index.html');
-			}
-
-			res.writeHead(200);
-			res.end(data);
-		  });
-
+	  	Page.render('home.html');
 	break;
-	
+
 	case '/upload':
 		uploader.uploadForm(req, res, uploadHandler);
 	break;
