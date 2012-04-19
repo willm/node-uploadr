@@ -1,16 +1,14 @@
 var fs = require('fs'),
     jade = require('jade');
 
-	exports.render = function (file, response){
-		response.writeHead(200, {'content-type': 'text/html'});
+	exports.render = function (file, res){
+		res.writeHead(200, {'content-type': 'text/html'});
 			fs.readFile(__dirname + '/' + file,
 			  function (err, data) {
 				if (err) {
 				  res.writeHead(500);
 				  return res.end('Error loading index.html');
 				}
-
-				res.writeHead(200);
 				res.end(data);
 		});
 	}

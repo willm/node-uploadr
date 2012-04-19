@@ -11,7 +11,7 @@ var uploadHandler = new events.EventEmitter();
 function routes(req, res) {
   switch(req.url){
   	case '/':
-	  	Page.render('home.html');
+	  	Page.render('home.html', res);
 	break;
 
 	case '/upload':
