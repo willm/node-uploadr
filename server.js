@@ -4,7 +4,10 @@ var server = require('http').createServer(routes),
     uploader = require('./Uploader.js'),
     Page = require('./Page.js'),
     io = require('socket.io').listen(server),
-    fs = require('fs');
+    fs = require('fs'),
+    events = require('events');
+    
+var uploadHandler = new events.EventEmitter();
 
 function routes(req, res) {
   switch(req.url){
@@ -23,7 +26,7 @@ function routes(req, res) {
 	break;
 	
 	case '/upload':
-		uploader.uploadForm(req, res);
+		uploader.uploadForm(req, res, uploadHandler);
 	break;
 	
 	default:
@@ -35,16 +38,12 @@ server.listen(TEST_PORT);
 
 console.log('listening on http://localhost:'+TEST_PORT+'/');
 
-(function (){
+(function (eventHandler){
 	var fakePercent = 0;
 	io.sockets.on('connection', function (socket) {
-		
-		socket.on('begin-upload', function (data) {
+		eventHandler.on('upload-status', function(data){
 			console.log(data);
-			setInterval(function(){
-				socket.emit('upload-progress', { sent : fakePercent +'%' });
-				fakePercent ++;
-				},2000);
+				socket.emit('upload-progress', { sent : data.data });
 		});
 	});
-})();
+})(uploadHandler);

@@ -5,15 +5,16 @@
    </head>
    <body>
       <h1>uploadr</h1>
-      <form action="/upload" method="post" enctype="multipart/form-data" style="width:300px"><br />
-      <label for="file">file: </label>
-      <input type="file" name="file" id="file" /><br />
-      <div style="min-height=20px;border:solid 1px;width=100px" id="prog" >&nbsp;</div>
-      <label for="message">message: </label>
-      <textarea name="message" id="message" style="vertical-align:text-top;"></textarea><br />
-      <input type="submit" />
+      <form action="/upload" method="post" id="up-form" enctype="multipart/form-data" style="width:300px"><br />
+		  <label for="file">file: </label>
+		  <input type="file" name="file" id="file" /><br />
+		  <div style="min-height=20px;border:solid 1px;width=100px" id="prog" >&nbsp;</div>
+		  <label for="message">message: </label>
+		  <textarea name="message" id="message" style="vertical-align:text-top;"></textarea><br />
+		  <input type="submit" />
       </form>
       <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+      <script src="http://malsup.github.com/jquery.form.js"></script> 
       <script src="/socket.io/socket.io.js"></script>
       <script>
 		  var socket = io.connect('http://localhost');
@@ -23,9 +24,16 @@
 		  });
 		  
 		  $('#file').change(function(){
+		    console.log($(this).val());
+		    $('#up-form').ajaxForm(function(data,statusText,form) {
+				console.log(data);
+			}).submit();
 		  	socket.emit('begin-upload', { fileName: $(this).val() });
 		  	}
 		  );
+		  
+		  
+		
       </script>
    </body>
 </html>
