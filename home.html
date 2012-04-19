@@ -8,6 +8,7 @@
       <form action="/upload" method="post" enctype="multipart/form-data" style="width:300px"><br />
       <label for="file">file: </label>
       <input type="file" name="file" id="file" /><br />
+      <div style="min-height=20px;border:solid 1px;width=100px" id="prog" >&nbsp;</div>
       <label for="message">message: </label>
       <textarea name="message" id="message" style="vertical-align:text-top;"></textarea><br />
       <input type="submit" />
@@ -16,7 +17,8 @@
       <script src="/socket.io/socket.io.js"></script>
       <script>
 		  var socket = io.connect('http://localhost');
-		  socket.on('news', function (data) {
+		  socket.on('upload-progress', function (data) {
+		    $('#prog').text(data.sent);
 			console.log(data);
 		  });
 		  

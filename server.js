@@ -35,11 +35,16 @@ server.listen(TEST_PORT);
 
 console.log('listening on http://localhost:'+TEST_PORT+'/');
 
-io.sockets.on('connection', function (socket) {
-	/*setInterval(function(){
-		socket.emit('news', { hello: 'world' });
-		}, 2000);*/
-	socket.on('begin-upload', function (data) {
-		console.log(data);
+(function (){
+	var fakePercent = 0;
+	io.sockets.on('connection', function (socket) {
+		
+		socket.on('begin-upload', function (data) {
+			console.log(data);
+			setInterval(function(){
+				socket.emit('upload-progress', { sent : fakePercent +'%' });
+				fakePercent ++;
+				},2000);
+		});
 	});
-});
+})();
