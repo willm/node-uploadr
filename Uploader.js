@@ -8,6 +8,7 @@ exports.uploadForm = function (req, res, event){
 		fields = [];
 
 	form.uploadDir = uploadDirectory;
+	form.keepExtensions = true;
 
 	function percentageComplete (total, received){
 		return Math.round (received * 100 / total);
@@ -18,7 +19,7 @@ exports.uploadForm = function (req, res, event){
 			fields.push([field, value]);
 		})
 		.on('progress', function(bytesReceived, bytesExpected) {
-			var percentage = percentageComplete(bytesExpected,bytesReceived);
+			var percentage = percentageComplete(bytesExpected, bytesReceived);
 			if(percentage % 5 === 0){
 				event.emit('upload-status',{data:percentage});
 			}
