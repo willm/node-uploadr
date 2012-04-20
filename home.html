@@ -4,10 +4,25 @@
 	<title>uploadr</title>
 	<style type="text/css" media="screen">
 		textarea { vertical-align : text-top; }
+		a { color : yellow; }
 		
-		.formField { width : 350px; }
+		.formField 
+		{ 
+			width : 500px;
+			padding : 3px;
+			margin : 5px;
+		}
+		.round
+		{
+			-moz-border-radius: 5px;
+			border-radius: 5px;
+		}
 		
-		#pathToUploadedFile { background-color : green; }
+		#pathToUploadedFile 
+		{ 
+			background-color : green; 
+			overflow : hidden;
+		}
 		#prog
 		{
 			border:solid 1px;
@@ -22,12 +37,12 @@
 			<label for="file">file: </label>
 			<input type="file" name="file" id="file" class="formField" />
 			<br />
-			<p id="pathToUploadedFile" class="formField"></p>
-			<div id="prog" class="formField">&nbsp;</div>
-			<div class="formField">
-				<label for="message">message: </label>
-				<textarea name="message" id="message" class="formField"></textarea>
-			</div>
+			<p id="pathToUploadedFile" class="formField round" hidden="true"></p>
+			<div id="prog" class="formField round">&nbsp;</div>
+			
+			<label for="message">message: </label>
+			<br />
+			<textarea name="message" id="message" class="formField"></textarea>
 			<br />
 			<input type="submit" />
 		</form>
@@ -43,7 +58,7 @@
 			$('#file').change(function(){
 				console.log($(this).val());
 				$('#up-form').ajaxForm(function(data,statusText,form) {
-					$('#pathToUploadedFile').text(data);
+					$('#pathToUploadedFile').attr('hidden', false).html('<a href='+data+'>'+data+'</a>');
 				}).submit();
 				
 				socket.emit('begin-upload', { fileName: $(this).val() });
