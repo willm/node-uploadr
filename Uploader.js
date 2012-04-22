@@ -1,8 +1,10 @@
 var formidable = require('formidable'),
 	util = require('util'),
-	uploadDirectory = './uploads';
+    events = require('events'),
+	uploadDirectory = './uploads',
+    uploadHandler = new events.EventEmitter();
 
-exports.uploadForm = function (req, res, event){
+exports.uploadForm = function (req, res){
 	var form = new formidable.IncomingForm(),
 		files = [],
 		fields = [];
@@ -21,7 +23,7 @@ exports.uploadForm = function (req, res, event){
 		.on('progress', function(bytesReceived, bytesExpected) {
 			var percentage = percentageComplete(bytesExpected, bytesReceived);
 			if(percentage % 5 === 0){
-				event.emit('upload-status',{data:percentage});
+				uploadHandler.emit('upload-status',{data:percentage});
 			}
 		})
 		.on('file', function(field, file) {
@@ -33,4 +35,11 @@ exports.uploadForm = function (req, res, event){
 			res.end(files[0][1].path);
 		});
 	form.parse(req);
+};
+
+exports.handleProgress = function (socket) {
+	uploadHandler.on('upload-status', function(data){
+		console.log(data);
+		socket.emit('upload-progress', { sent : data.data });
+	});
 };
