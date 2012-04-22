@@ -1,5 +1,4 @@
-var fs = require('fs'),
-	jade = require('jade');
+var fs = require('fs');
 
 	exports.render = function (file, res) {
 		res.writeHead(200, {'content-type': 'text/html'});

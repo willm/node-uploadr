@@ -19,9 +19,9 @@
 	],
 	"main": "server.js",
 	"dependencies": {
-		"express": "2.5.1",
+		"formidable": "1.0.9",
 		"jade": "0.14.2",
-		"jasmine-node": "1.0.25",
+		"socket.io" : "0.9.6",
 		"path": "0.4.9"
 	}
 }

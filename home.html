@@ -60,8 +60,6 @@
 				$('#up-form').ajaxForm(function(data,statusText,form) {
 					$('#pathToUploadedFile').attr('hidden', false).html('<a href='+data+'>'+data+'</a>');
 				}).submit();
-				
-				//socket.emit('begin-upload', { fileName: $(this).val() });
 			});
 		</script>
 	</body>

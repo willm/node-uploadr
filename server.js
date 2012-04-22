@@ -2,7 +2,7 @@ var http = require('http'),
     uploader = require('./Uploader.js'),
     Page = require('./Page.js'),
     io = require('socket.io'),
-    port = 8080;
+    port = 80;
 
 function routes(req, res) {
 	switch (req.url) {
