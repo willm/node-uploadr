@@ -2,7 +2,12 @@ var formidable = require('formidable'),
 	util = require('util'),
     events = require('events'),
 	uploadDirectory = './uploads',
+	fs = require('fs');
     uploadHandler = new events.EventEmitter();
+
+(function (){
+	fs.mkdir(uploadDirectory);
+})();
 
 exports.uploadForm = function (req, res){
 	var form = new formidable.IncomingForm(),
