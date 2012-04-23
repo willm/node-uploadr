@@ -35,9 +35,11 @@ exports.uploadForm = function (req, res){
 			files.push([field, file]);
 		})
 		.on('end', function() {
+			var response = {path : files[0][1].path, message : fields[0][1]};
 			res.writeHead(200, {'content-type': 'application/json'});
-			console.log('{"path": ' + files[0][1].path + ', "message" : ' + fields[0][1] + '}');
-			res.end(JSON.stringify('{"path": "' + files[0][1].path + '", "message" : "' + fields[0][1] + '"}'));
+			
+			console.log(JSON.stringify(response));
+			res.end(JSON.stringify(response));
 		});
 	form.parse(req);
 };
