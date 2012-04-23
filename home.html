@@ -63,8 +63,8 @@
 			});
 			
 			function displayUploadedPath (data,statusText,form) {
-				var response = $.parseJSON(data);
-				$('#pathToUploadedFile').attr('hidden', false).html('<a href='+response.path+'>'+response.path+'</a>');
+				console.log(data);
+				$('#pathToUploadedFile').attr('hidden', false).html('<a href='+data.path+'>'+data.path+'</a>');
 			}
 		</script>
 	</body>
