@@ -56,11 +56,16 @@
 			});
 			
 			$('#file').change(function(){
-				console.log($(this).val());
-				$('#up-form').ajaxForm(function(data,statusText,form) {
-					$('#pathToUploadedFile').attr('hidden', false).html('<a href='+data+'>'+data+'</a>');
-				}).submit();
+				$('#up-form').ajaxForm({
+					success:displayUploadedPath,
+					contentType:"application/json; charset=utf-8",
+					dataType : 'json'}).submit();
 			});
+			
+			function displayUploadedPath (data,statusText,form) {
+				var response = $.parseJSON(data);
+				$('#pathToUploadedFile').attr('hidden', false).html('<a href='+response.path+'>'+response.path+'</a>');
+			}
 		</script>
 	</body>
 </html>
